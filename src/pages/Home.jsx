@@ -3,12 +3,15 @@ import { supabase } from '../supabaseClient.js'
 import Header from '../components/Header.jsx'
 import CategoryFilter from '../components/CategoryFilter.jsx'
 import FoodGrid from '../components/FoodGrid.jsx'
+import CartBar from '../components/CartBar.jsx'
+import CartDrawer from '../components/CartDrawer.jsx'
 
 export default function Home() {
   const [dishes, setDishes] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [kitchenOpen, setKitchenOpen] = useState(true)
   const [loading, setLoading] = useState(true)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   useEffect(() => {
     fetchDishes()
@@ -62,6 +65,9 @@ export default function Home() {
       ) : (
         <FoodGrid dishes={filteredDishes} kitchenOpen={kitchenOpen} />
       )}
+
+      <CartBar onOpen={() => setDrawerOpen(true)} />
+      <CartDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </div>
   )
 }
