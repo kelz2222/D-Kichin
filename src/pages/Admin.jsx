@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient.js'
 import PinGate from '../components/PinGate.jsx'
 import KitchenToggle from '../components/KitchenToggle.jsx'
+import UploadDishForm from '../components/UploadDishForm.jsx'
+import InventoryList from '../components/InventoryList.jsx'
 
 export default function Admin() {
   const [unlocked, setUnlocked] = useState(
@@ -59,7 +61,8 @@ export default function Admin() {
         <KitchenToggle isOpen={kitchenOpen} onToggled={setKitchenOpen} />
       </div>
 
-      {/* Upload form + inventory list go here — Part 7 */}
+      <UploadDishForm onDishAdded={fetchDishes} />
+      <InventoryList dishes={dishes} onUpdated={fetchDishes} />
     </div>
   )
 }
