@@ -23,7 +23,7 @@ export default function FooterFeatures() {
         </div>
       ))}
       <p className="col-span-2 text-center text-white/30 text-[10px] mt-2">
-        © 2026 D" Kichin · Bremang, New York Junction, Kumasi
+        © 2026 D&rsquo; Kichin · Bremang, New York Junction, Kumasi
       </p>
     </div>
   )
