@@ -48,7 +48,7 @@ export default function Logo({ size = 56 }) {
       </svg>
 
       <div
-        className="mt-1 text-white font-bold tracking-wide"
+        className="-mt-4 text-white font-bold tracking-wide"
         style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
       >
         <span className="text-gold">D&rsquo;</span> Kichin
