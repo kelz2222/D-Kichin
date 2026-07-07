@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../CartContext.jsx'
+import { logEvent } from '../lib/analytics.js'
 
 const WHATSAPP_NUMBER = '233243763138'
 const FREE_DELIVERY_THRESHOLD = 60
@@ -67,6 +68,7 @@ ${itemsText.trim()}
     const message = buildWhatsAppMessage()
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
     window.open(url, '_blank')
+    logEvent('order_placed')
     clearCart()
     setName('')
     setLocation('')
