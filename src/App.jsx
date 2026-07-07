@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CartProvider } from './CartContext.jsx'
+import { FavoritesProvider } from './FavoritesContext.jsx'
 import Home from './pages/Home.jsx'
 import Admin from './pages/Admin.jsx'
 
@@ -18,7 +19,9 @@ export default function App() {
 
   return (
     <CartProvider>
-      {isAdmin ? <Admin /> : <Home />}
+      <FavoritesProvider>
+        {isAdmin ? <Admin /> : <Home />}
+      </FavoritesProvider>
     </CartProvider>
   )
 }
