@@ -21,28 +21,58 @@ export function CartProvider({ children }) {
   }, [cart])
 
   function addToCart(dish) {
+    const key = dish.id
     setCart((prev) => {
-      const existing = prev.find((item) => item.id === dish.id)
+      const existing = prev.find((item) => item.key === key)
       if (existing) {
         return prev.map((item) =>
-          item.id === dish.id ? { ...item, qty: item.qty + 1 } : item
+          item.key === key ? { ...item, qty: item.qty + 1 } : item
         )
       }
-      return [...prev, { ...dish, qty: 1 }]
+      return [
+        ...prev,
+        { key, id: dish.id, name: dish.name, price: Number(dish.price), qty: 1 },
+      ]
     })
   }
 
-  function removeFromCart(dishId) {
-    setCart((prev) => prev.filter((item) => item.id !== dishId))
+  function addCombo(comboLabel, items) {
+    setCart((prev) => {
+      let next = [...prev]
+      items.forEach((item) => {
+        const key = `${item.id}::combo::${comboLabel}`
+        const existingIndex = next.findIndex((c) => c.key === key)
+        if (existingIndex >= 0) {
+          next[existingIndex] = {
+            ...next[existingIndex],
+            qty: next[existingIndex].qty + 1,
+          }
+        } else {
+          next.push({
+            key,
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            qty: 1,
+            comboLabel,
+          })
+        }
+      })
+      return next
+    })
   }
 
-  function updateQty(dishId, qty) {
+  function removeFromCart(key) {
+    setCart((prev) => prev.filter((item) => item.key !== key))
+  }
+
+  function updateQty(key, qty) {
     if (qty <= 0) {
-      removeFromCart(dishId)
+      removeFromCart(key)
       return
     }
     setCart((prev) =>
-      prev.map((item) => (item.id === dishId ? { ...item, qty } : item))
+      prev.map((item) => (item.key === key ? { ...item, qty } : item))
     )
   }
 
@@ -56,6 +86,7 @@ export function CartProvider({ children }) {
   const value = {
     cart,
     addToCart,
+    addCombo,
     removeFromCart,
     updateQty,
     clearCart,
