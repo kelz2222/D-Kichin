@@ -15,9 +15,31 @@ export default function CartDrawer({ isOpen, onClose }) {
   const amountToFreeDelivery = FREE_DELIVERY_THRESHOLD - totalPrice
 
   function buildWhatsAppMessage() {
-    const itemLines = cart
-      .map((item) => `- ${item.qty}x ${item.name} (₵${(item.price * item.qty).toFixed(0)})`)
-      .join('\n')
+    const comboGroups = {}
+    const singleItems = []
+
+    cart.forEach((item) => {
+      if (item.comboLabel) {
+        if (!comboGroups[item.comboLabel]) comboGroups[item.comboLabel] = []
+        comboGroups[item.comboLabel].push(item)
+      } else {
+        singleItems.push(item)
+      }
+    })
+
+    let itemsText = ''
+
+    Object.entries(comboGroups).forEach(([label, items]) => {
+      const comboTotal = items.reduce((s, i) => s + i.price * i.qty, 0)
+      itemsText += `🎁 *${label}* (₵${comboTotal.toFixed(0)})\n`
+      items.forEach((item) => {
+        itemsText += `   • ${item.qty}x ${item.name}\n`
+      })
+    })
+
+    singleItems.forEach((item) => {
+      itemsText += `- ${item.qty}x ${item.name} (₵${(item.price * item.qty).toFixed(0)})\n`
+    })
 
     const deliveryLine = qualifiesForFreeDelivery
       ? '\n🚚 *FREE DELIVERY APPLIED* (DKFREE)\n-------------------------'
@@ -29,7 +51,7 @@ export default function CartDrawer({ isOpen, onClose }) {
 📍 *Location:* ${location}
 -------------------------
 🛒 *Items:*
-${itemLines}
+${itemsText.trim()}
 -------------------------${deliveryLine}
 💰 *Total Amount:* ₵${totalPrice.toFixed(0)}
 *Please confirm my order and delivery time!*`
@@ -81,29 +103,36 @@ ${itemLines}
                 <div className="space-y-3 mb-5">
                   {cart.map((item) => (
                     <div
-                      key={item.id}
+                      key={item.key}
                       className="flex items-center justify-between bg-white/5 rounded-2xl p-3"
                     >
                       <div className="flex-1">
-                        <p className="text-white text-sm font-medium">{item.name}</p>
+                        <p className="text-white text-sm font-medium">
+                          {item.name}
+                          {item.comboLabel && (
+                            <span className="ml-2 text-[10px] text-gold bg-gold/10 px-2 py-0.5 rounded-full">
+                              🎁 {item.comboLabel}
+                            </span>
+                          )}
+                        </p>
                         <p className="text-gold text-xs">₵{item.price.toFixed(2)} each</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => updateQty(item.id, item.qty - 1)}
+                          onClick={() => updateQty(item.key, item.qty - 1)}
                           className="w-7 h-7 rounded-full bg-white/10 text-white flex items-center justify-center"
                         >
                           −
                         </button>
                         <span className="text-white text-sm w-5 text-center">{item.qty}</span>
                         <button
-                          onClick={() => updateQty(item.id, item.qty + 1)}
+                          onClick={() => updateQty(item.key, item.qty + 1)}
                           className="w-7 h-7 rounded-full bg-white/10 text-white flex items-center justify-center"
                         >
                           +
                         </button>
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.key)}
                           className="text-red-400 text-xs ml-1"
                         >
                           ✕
