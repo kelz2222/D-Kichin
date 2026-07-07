@@ -19,11 +19,21 @@ const SLIDES = [
   {
     kicker: 'Hungry right',
     title: 'NOW?',
-    highlight: "ORDER ON WHATSAPP",
+    highlight: 'ORDER ON WHATSAPP',
     subtitle: 'Simple checkout — no app download needed.',
-    emoji: '📲',
+    useWhatsAppBadge: true,
   },
 ]
+
+function WhatsAppBadge() {
+  return (
+    <div className="absolute right-4 top-4 w-16 h-16 rounded-full bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/30">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
+        <path d="M12.04 2c-5.46 0-9.89 4.43-9.89 9.89 0 1.74.46 3.43 1.32 4.93L2 22l5.31-1.39a9.87 9.87 0 0 0 4.73 1.2h.005c5.46 0 9.89-4.43 9.89-9.89 0-2.64-1.03-5.12-2.9-6.99A9.82 9.82 0 0 0 12.04 2zm5.78 14.02c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.15-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.83 2 .9 2.15.07.15.11.32.02.51-.09.2-.14.32-.27.49-.14.17-.29.38-.41.51-.14.14-.28.3-.12.58.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.27.14.44.11.6-.07.16-.18.7-.82.89-1.1.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.32.07.12.07.65-.17 1.33z" />
+      </svg>
+    </div>
+  )
+}
 
 export default function HeroBanner({ onOrderNow }) {
   const [index, setIndex] = useState(0)
@@ -66,9 +76,13 @@ export default function HeroBanner({ onOrderNow }) {
         </motion.div>
       </AnimatePresence>
 
-      <span className="absolute right-4 top-4 text-6xl opacity-20 select-none">
-        {slide.emoji}
-      </span>
+      {slide.useWhatsAppBadge ? (
+        <WhatsAppBadge />
+      ) : (
+        <span className="absolute right-4 top-4 text-6xl opacity-20 select-none">
+          {slide.emoji}
+        </span>
+      )}
 
       <div className="flex gap-1.5 mt-4">
         {SLIDES.map((_, i) => (
