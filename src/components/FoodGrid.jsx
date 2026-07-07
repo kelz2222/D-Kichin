@@ -11,7 +11,7 @@ export default function FoodGrid({ dishes, kitchenOpen }) {
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 px-4 pb-32">
+    <div className="grid grid-cols-2 gap-3 px-4">
       {dishes.map((dish) => (
         <FoodCard key={dish.id} dish={dish} kitchenOpen={kitchenOpen} />
       ))}
