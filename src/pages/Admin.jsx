@@ -4,6 +4,7 @@ import PinGate from '../components/PinGate.jsx'
 import KitchenToggle from '../components/KitchenToggle.jsx'
 import InventoryList from '../components/InventoryList.jsx'
 import DishFormModal from '../components/DishFormModal.jsx'
+import AnalyticsSummary from '../components/AnalyticsSummary.jsx'
 
 export default function Admin() {
   const [unlocked, setUnlocked] = useState(
@@ -11,7 +12,7 @@ export default function Admin() {
   )
   const [dishes, setDishes] = useState([])
   const [kitchenOpen, setKitchenOpen] = useState(true)
-  const [modalMode, setModalMode] = useState(null) // null | 'create' | 'edit'
+  const [modalMode, setModalMode] = useState(null)
   const [editingDish, setEditingDish] = useState(null)
 
   useEffect(() => {
@@ -77,6 +78,8 @@ export default function Admin() {
       <div className="mb-6">
         <KitchenToggle isOpen={kitchenOpen} onToggled={setKitchenOpen} />
       </div>
+
+      <AnalyticsSummary />
 
       <button
         onClick={openCreateModal}
