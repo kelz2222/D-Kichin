@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../CartContext.jsx'
 
 const WHATSAPP_NUMBER = '233243763138'
+const FREE_DELIVERY_THRESHOLD = 60
 
 export default function CartDrawer({ isOpen, onClose }) {
   const { cart, updateQty, removeFromCart, totalPrice, clearCart } = useCart()
@@ -10,10 +11,17 @@ export default function CartDrawer({ isOpen, onClose }) {
   const [location, setLocation] = useState('')
   const [error, setError] = useState('')
 
+  const qualifiesForFreeDelivery = totalPrice >= FREE_DELIVERY_THRESHOLD
+  const amountToFreeDelivery = FREE_DELIVERY_THRESHOLD - totalPrice
+
   function buildWhatsAppMessage() {
     const itemLines = cart
       .map((item) => `- ${item.qty}x ${item.name} (₵${(item.price * item.qty).toFixed(0)})`)
       .join('\n')
+
+    const deliveryLine = qualifiesForFreeDelivery
+      ? '\n🚚 *FREE DELIVERY APPLIED* (DKFREE)\n-------------------------'
+      : ''
 
     return `*🚨 NEW ORDER PLACED!*
 -------------------------
@@ -22,7 +30,7 @@ export default function CartDrawer({ isOpen, onClose }) {
 -------------------------
 🛒 *Items:*
 ${itemLines}
--------------------------
+-------------------------${deliveryLine}
 💰 *Total Amount:* ₵${totalPrice.toFixed(0)}
 *Please confirm my order and delivery time!*`
   }
@@ -108,6 +116,16 @@ ${itemLines}
 
               {cart.length > 0 && (
                 <>
+                  {qualifiesForFreeDelivery ? (
+                    <div className="bg-green-500/10 border border-green-500/30 text-green-400 text-xs rounded-2xl p-3 mb-3 text-center">
+                      🚚 You've unlocked FREE DELIVERY!
+                    </div>
+                  ) : (
+                    <div className="bg-gold/10 border border-gold/30 text-gold text-xs rounded-2xl p-3 mb-3 text-center">
+                      Add ₵{amountToFreeDelivery.toFixed(2)} more for FREE delivery
+                    </div>
+                  )}
+
                   <div className="flex justify-between text-white font-bold mb-4 border-t border-white/10 pt-3">
                     <span>Total</span>
                     <span className="text-gold">₵{totalPrice.toFixed(2)}</span>
