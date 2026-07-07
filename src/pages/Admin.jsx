@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient.js'
 import PinGate from '../components/PinGate.jsx'
 import KitchenToggle from '../components/KitchenToggle.jsx'
-import UploadDishForm from '../components/UploadDishForm.jsx'
 import InventoryList from '../components/InventoryList.jsx'
+import DishFormModal from '../components/DishFormModal.jsx'
 
 export default function Admin() {
   const [unlocked, setUnlocked] = useState(
@@ -11,6 +11,8 @@ export default function Admin() {
   )
   const [dishes, setDishes] = useState([])
   const [kitchenOpen, setKitchenOpen] = useState(true)
+  const [modalMode, setModalMode] = useState(null) // null | 'create' | 'edit'
+  const [editingDish, setEditingDish] = useState(null)
 
   useEffect(() => {
     if (unlocked) {
@@ -34,6 +36,21 @@ export default function Admin() {
       .eq('id', 1)
       .single()
     if (!error && data) setKitchenOpen(data.is_open)
+  }
+
+  function openCreateModal() {
+    setEditingDish(null)
+    setModalMode('create')
+  }
+
+  function openEditModal(dish) {
+    setEditingDish(dish)
+    setModalMode('edit')
+  }
+
+  function closeModal() {
+    setModalMode(null)
+    setEditingDish(null)
   }
 
   if (!unlocked) {
@@ -61,8 +78,23 @@ export default function Admin() {
         <KitchenToggle isOpen={kitchenOpen} onToggled={setKitchenOpen} />
       </div>
 
-      <UploadDishForm onDishAdded={fetchDishes} />
-      <InventoryList dishes={dishes} onUpdated={fetchDishes} />
+      <button
+        onClick={openCreateModal}
+        className="w-full bg-gold text-charcoal font-bold py-3 rounded-2xl mb-6"
+      >
+        + Add New Dish
+      </button>
+
+      <InventoryList dishes={dishes} onUpdated={fetchDishes} onEdit={openEditModal} />
+
+      {modalMode && (
+        <DishFormModal
+          mode={modalMode}
+          dish={editingDish}
+          onClose={closeModal}
+          onSaved={fetchDishes}
+        />
+      )}
     </div>
   )
 }
