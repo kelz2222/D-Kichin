@@ -1,10 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useCart } from '../CartContext.jsx'
+import { useFavorites } from '../FavoritesContext.jsx'
 import FoodImageTile from './FoodImageTile.jsx'
 
 export default function FoodCard({ dish, kitchenOpen }) {
   const { addToCart } = useCart()
+  const { isFavorite, toggleFavorite } = useFavorites()
+  const favorited = isFavorite(dish.id)
 
   return (
     <motion.div
@@ -16,6 +19,14 @@ export default function FoodCard({ dish, kitchenOpen }) {
         <span className="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full backdrop-blur-sm">
           {dish.category}
         </span>
+        <button
+          onClick={() => toggleFavorite(dish.id)}
+          className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center"
+        >
+          <span className={favorited ? 'text-red-500' : 'text-white/70'}>
+            {favorited ? '♥' : '♡'}
+          </span>
+        </button>
       </div>
       <div className="p-3">
         <h3 className="text-white font-semibold text-sm">{dish.name}</h3>
