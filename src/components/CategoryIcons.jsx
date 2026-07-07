@@ -1,6 +1,7 @@
 import React from 'react'
 
 const CATEGORIES = [
+  { name: 'All', emoji: '🍽️', gradient: 'from-gold/40 to-yellow-700/30' },
   { name: 'Fast Food', emoji: '🌯', gradient: 'from-orange-500/40 to-red-600/30' },
   { name: 'Local Dishes', emoji: '🍛', gradient: 'from-amber-500/40 to-yellow-600/30' },
   { name: 'Sides', emoji: '🥟', gradient: 'from-yellow-500/40 to-amber-700/30' },
