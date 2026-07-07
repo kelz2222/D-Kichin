@@ -24,8 +24,8 @@ export default function PinGate({ onUnlock }) {
         className="w-full max-w-xs bg-white/5 border border-white/10 rounded-2xl p-6"
       >
         <h1 className="text-white text-lg font-bold mb-1 text-center">
-          D" Kichin Admin
-        </h1>
+  D&rsquo; Kichin Admin
+</h1>
         <p className="text-white/40 text-xs text-center mb-5">
           Enter PIN to access dashboard
         </p>
