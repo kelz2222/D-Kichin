@@ -59,7 +59,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-charcoal px-4 py-6 pb-16">
-      <h1 className="text-white text-xl font-bold mb-4">D" Kichin Admin</h1>
+      <h1 className="text-white text-xl font-bold mb-4">D&rsquo; Kichin Admin</h1>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
