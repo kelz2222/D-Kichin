@@ -3,6 +3,7 @@ import { supabase } from '../supabaseClient.js'
 import Header from '../components/Header.jsx'
 import HeroBanner from '../components/HeroBanner.jsx'
 import CategoryIcons from '../components/CategoryIcons.jsx'
+import SurpriseMeCombo from '../components/SurpriseMeCombo.jsx'
 import CategorySection from '../components/CategorySection.jsx'
 import FoodGrid from '../components/FoodGrid.jsx'
 import PromoBanner from '../components/PromoBanner.jsx'
@@ -70,6 +71,10 @@ export default function Home() {
       )}
 
       <CategoryIcons selected={selectedCategory} onSelect={setSelectedCategory} />
+
+      {!loading && (
+        <SurpriseMeCombo dishes={dishes} kitchenOpen={kitchenOpen} />
+      )}
 
       <div ref={menuRef}>
         {loading ? (
