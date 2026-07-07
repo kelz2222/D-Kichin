@@ -22,6 +22,12 @@ export default function Header({ isOpen }) {
           {isOpen ? '🟢 Open' : '🔴 Closed'}
         </span>
       </div>
+
+      <div className="mt-2 flex justify-center">
+        <span className="text-white/40 text-[11px] italic">
+          🍳 Fresh from the Home Kitchen, to your door
+        </span>
+      </div>
     </header>
   )
 }
