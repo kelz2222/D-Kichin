@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const ADMIN_PIN = 'dkichin2026' // change this anytime — just edit this line
+const ADMIN_PIN = '202611' // change this anytime — just edit this line
 
 export default function PinGate({ onUnlock }) {
   const [pin, setPin] = useState('')
