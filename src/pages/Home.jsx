@@ -61,7 +61,7 @@ export default function Home() {
     <div className="min-h-screen bg-charcoal">
       <Header isOpen={kitchenOpen} />
 
-      <HeroBanner onOrderNow={scrollToMenu} />
+      <HeroBanner dishes={dishes} onOrderNow={scrollToMenu} />
 
       {!kitchenOpen && (
         <div className="mx-4 mb-3 bg-red-500/10 border border-red-500/40 text-red-300 text-sm rounded-2xl p-3 text-center">
