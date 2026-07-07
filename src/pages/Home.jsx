@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from '../supabaseClient.js'
+import { logEvent } from '../lib/analytics.js'
 import Header from '../components/Header.jsx'
 import HeroBanner from '../components/HeroBanner.jsx'
 import CategoryIcons from '../components/CategoryIcons.jsx'
@@ -25,6 +26,7 @@ export default function Home() {
   useEffect(() => {
     fetchDishes()
     fetchKitchenStatus()
+    logEvent('page_view')
   }, [])
 
   async function fetchDishes() {
