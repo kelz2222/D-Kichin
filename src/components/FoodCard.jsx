@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useCart } from '../CartContext.jsx'
+import FoodImageTile from './FoodImageTile.jsx'
 
 export default function FoodCard({ dish, kitchenOpen }) {
   const { addToCart } = useCart()
@@ -11,13 +12,10 @@ export default function FoodCard({ dish, kitchenOpen }) {
       className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden shadow-lg"
     >
       <div className="relative overflow-hidden h-32">
-        <motion.img
-          whileHover={{ scale: 1.08 }}
-          transition={{ duration: 0.3 }}
-          src={dish.image_url}
-          alt={dish.name}
-          className="w-full h-full object-cover"
-        />
+        <FoodImageTile dish={dish} />
+        <span className="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full backdrop-blur-sm">
+          {dish.category}
+        </span>
       </div>
       <div className="p-3">
         <h3 className="text-white font-semibold text-sm">{dish.name}</h3>
